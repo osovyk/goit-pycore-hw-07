@@ -110,7 +110,7 @@ class AddressBook(UserDict):
             print(f"Contact {contact_name} not found")
 
     def get_upcoming_birthdays(self, days: int = 7):
-        today = datetime.today()
+        today = datetime.today().date()
         upcoming_birthdays = []
 
         for record in self.data.values():
@@ -203,7 +203,11 @@ def main():
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
-        command, *args = parse_input(user_input)
+        try:
+            command, *args = parse_input(user_input)
+        except ValueError:
+            command = None
+            args = None
 
         match command:
             case "close" | "exit":
